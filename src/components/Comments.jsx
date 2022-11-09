@@ -12,7 +12,7 @@ const Comments = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [isShow, setisShow] = useState(false);
-  const { data }  = useSelector((state) => state.comments.data);
+  const { data } = useSelector((state) => state.comments.commentsByBookId);
 
   useEffect(() => {
     if (isShow) {
@@ -33,10 +33,9 @@ const Comments = () => {
       </StToggleContainer>
       <AddCommentForm />
       <StCommentList>
-        {data.comment.map((comment) => (
-            <Comment key={comment.id} comment={comment} />
+        {data?.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
         ))}
-        
       </StCommentList>
     </StContainer>
   );
@@ -52,6 +51,7 @@ const StContainer = styled.div`
   width: 100%;
   background-color: #fff;
   transition: height 400ms ease-in-out;
+  overflow: hidden;
 `;
 
 const StToggleContainer = styled.div`

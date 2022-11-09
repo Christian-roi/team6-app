@@ -20,7 +20,7 @@ const initialState = {
     content: "",
     username: "",
     id: 0,
-    todoId: 0,
+    bookId: "",
   },
   isLoading: false,
   error: null,

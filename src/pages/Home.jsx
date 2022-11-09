@@ -15,6 +15,7 @@ import { __getBooks } from "../redux/modules/bookSlices";
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState([]);
   const { books, isLoading, error } = useSelector((state) => state.books);
 
   useEffect(() => {
@@ -23,27 +24,38 @@ const Home = () => {
 
   if (isLoading) return <TextLoad>Loading...</TextLoad>;
 
+  const inputHandler = (event) => {
+    let lowerCase = event.target.value.toLowerCase();
+    setSearchTerm(lowerCase);
+  };
+
+  const filteredBooks = books.filter((item) => {
+    if (item.title.toLowerCase().includes(searchTerm)) {
+      return item;
+    }
+  })
+
   return (
     <Layout>
       <Header />
       <StRow>
         <StAddButton onClick={() => navigate("/add")}>Add</StAddButton>
-        <StInput type="text" placeholder="Search" />
+        <StInput type="text" placeholder="Search by Title..." onChange={inputHandler} />
         <StDumpButton onClick={() => navigate("/dump")}>Dump</StDumpButton>
       </StRow>
-      <h3>Ready to Read</h3>
-        {books.map((item) => {
-          if (!item.isDone && !item.isDeleted) {
-            return <Card books={item} />;
-          }
-        })}
-      
-      <h3>Done Read</h3>
-        {books.map((item) => {
-          if (item.isDone && !item.isDeleted) {
-            return <Card books={item} />;
-          }
-        })}
+          <h3>Ready to Read</h3>
+          {filteredBooks.map((item) => {
+            if (!item.isDeleted && !item.isDone) {
+              return <Card books={item} />;
+            }
+          })}
+          <h3>Done Read</h3>
+          {filteredBooks.map((item) => {
+            if (!item.isDeleted && item.isDone) {
+              return <Card books={item} />;
+            }
+          })}
+          
     </Layout>
   );
 };

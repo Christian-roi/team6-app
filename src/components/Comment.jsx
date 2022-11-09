@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { VscTrash } from "react-icons/vsc";
+import { VscClose, VscTrash } from "react-icons/vsc";
 import { VscEdit } from "react-icons/vsc";
 import Text from "../elements/Text";
 import Stack from "../elements/Stack";
@@ -42,7 +42,7 @@ const Comment = ({ comment }) => {
         id: comment.id,
         content: updatedComment,
         username: comment.username,
-        todoId: id,
+        bookId: id,
       })
     );
     setIsEdit(false);
@@ -85,14 +85,14 @@ const Comment = ({ comment }) => {
               bgColor="#FE531F"
               onClick={onCancelButtonHandler}
             >
-              <Text color="#fff">Cancel</Text>
+              <VscClose />
             </Button>
             <Button
               size="small"
               bgColor="#FE531F"
               onClick={onUpdateButtonHandler}
             >
-              <Text color="#fff">Update</Text>
+                <VscEdit />
             </Button>
           </StControlGroup>
         </>
@@ -110,7 +110,7 @@ const Comment = ({ comment }) => {
               disabled={isGlobalEditmode}
               onClick={onChangeEditButtonHandler}
             >
-              <VscEdit size="16" color="#fff" />
+              <VscEdit size="16" color="#000" />
             </Button>
             <Button
               size="small"
@@ -118,7 +118,7 @@ const Comment = ({ comment }) => {
               onClick={onDeleteButtonHandler}
               disabled={isGlobalEditmode}
             >
-              <VscTrash size="16" color="#fff" />
+              <VscTrash size="16" color="#000" />
             </Button>
           </StControlGroup>
         </>
